@@ -3,8 +3,6 @@ import superheroesRepository from '../repository/superheroesRepository.mjs';
 export async function obtenerSuperheroePorId(id)
 {
     const obtenerId = await superheroesRepository.obtenerPorId(id);
-    //console.log(obtenerId);
-
     return obtenerId;
 }
 

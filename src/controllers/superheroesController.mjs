@@ -179,7 +179,7 @@ export async function confirmarEliminacionController(req, res) {
             return res.status(404).send('Superhéroe no encontrado para confirmar eliminación.');
         }
 
-        res.render('confirmar-eliminacion', { info: superheroe });
+        res.render('confirmarEliminacion', { info: superheroe });
         //res.render('confirmarEliminacion', { info: superheroe, title: `Confirmar Eliminación: ${superheroe.nombreSuperHeroe}`, navbarLinks: commonNavbarLinks });
     } catch (error) {
         console.error('Error en confirmarEliminacionController:', error);

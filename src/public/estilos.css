@@ -1,5 +1,3 @@
-/* src/public/estilos.css */
-
 /* Estilos para el Sticky Footer (CSS Puro) */
 html, body {
     height: 100%; /* Asegura que html y body ocupen toda la altura del viewport */
@@ -11,30 +9,23 @@ body {
     display: flex; /* Convierte el body en un contenedor flex */
     flex-direction: column; /* Organiza los elementos hijos (header, main, footer) en una columna */
     min-height: 100vh; /* Asegura que el body ocupe al menos el 100% de la altura del viewport */
-    /* REMOVIDO: border: 5px solid purple; /* ¡DEBUG! Borde púrpura para ver la extensión del body */
-    
+
     /* Tus estilos existentes para el body */
     font-family: 'Inter', sans-serif;
     background-color: #f0f2f5; /* Color de fallback por si la imagen no carga */
     color: #333;
     line-height: 1.6;
-    /* REMOVIDO: padding-bottom:60px; - No es necesario con sticky footer */
 }
 
 main {
     flex-grow: 1; /* Permite que el main se "estire" y ocupe todo el espacio disponible */
-    /* Puedes añadir padding aquí si quieres que el contenido no se pegue a los bordes del main */
-    /* padding: 20px; */
 }
 
-/* Estilos para el Footer (modificado para sticky footer) */
 footer {
     text-align: center;
     padding: 10px;
     background-color: #333; /* Restaurado a gris oscuro */
     color: white; /* Restaurado a blanco */
-    /* REMOVIDO: border-top: 5px solid blue; /* ¡DEBUG! Borde AZUL para mayor visibilidad */
-    /* REMOVIDO: position:fixed; bottom:0; width:100%; - Esto es para fixed footer, no sticky */
     margin-top: auto; /* Esto empuja el footer hacia abajo en un contenedor flex-col */
     width: 100%; /* Asegura que el footer ocupe todo el ancho */
 }
@@ -126,7 +117,7 @@ a:hover {
 }
 
 .form-group label {
-    display: block; /* Asegura que la etiqueta esté en su propia línea */
+    display: block; 
     margin-bottom: 8px;
     font-weight: bold;
     color: #555;
@@ -135,7 +126,7 @@ a:hover {
 
 .form-group input[type="text"],
 .form-group input[type="number"],
-.form-group input[type="email"], /* Añadido para consistencia */
+.form-group input[type="email"],
 .form-group textarea {
     width: 100%; /* Ocupa todo el ancho disponible */
     padding: 10px;
@@ -277,7 +268,7 @@ a:hover {
     border: 1px solid #f5c6cb;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
     body {
         padding: 15px;
@@ -306,7 +297,6 @@ a:hover {
     background-color: #333; /* Restaurado a gris oscuro */
     padding: 10px 20px;
     color: white; /* Restaurado a blanco */
-    /* REMOVIDO: border-bottom: 5px solid green; /* ¡DEBUG! Borde VERDE */
 }
 
 .navbar .logo {
@@ -510,7 +500,6 @@ a:hover {
     background-position: center center;
     background-attachment: fixed;
     min-height: calc(100vh - 60px); /* Ajusta para el navbar y footer si es necesario */
-    /* display: flex; */
     align-items: center;
     justify-content: center; /* Centra horizontalmente */
     flex-direction: column; /* Apila el contenido verticalmente */
@@ -525,7 +514,6 @@ a:hover {
     background-position: center center;
     background-attachment: fixed;
     min-height: calc(100vh - 60px); /* Ajusta para el navbar y footer si es necesario */
-    /*display: flex; */
     align-items: flex-start; /* Alinea al inicio verticalmente */
     justify-content: center; /* Centra horizontalmente */
     flex-direction: column; /* Apila el contenido verticalmente */

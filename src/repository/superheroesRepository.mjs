@@ -1,5 +1,4 @@
-import superHero from '../models/superheroe.mjs';
-import SuperHero from '../models/superheroe.mjs'
+import SuperHero from '../models/superheroe.mjs';
 import IRepository from './iRepository.mjs';
 
 class SuperHeroRepository extends IRepository
@@ -40,7 +39,6 @@ class SuperHeroRepository extends IRepository
 
     async obtenerMayoresDe30() 
     {
-        //console.log('Estoy en la capa de repositorio en obtener mayores de 30');
         const superheroeEncontrado = await SuperHero.find
         ({
         edad: { $gt: 30 },
@@ -57,15 +55,14 @@ class SuperHeroRepository extends IRepository
     {
         const nuevoHeroe = new SuperHero(objetoSuperheroe);
         const heroCreado = await nuevoHeroe.save();
-       // res.send(`Nuevo Superheroe creado: ${nuevoHeroe}`);
         console.log(heroCreado);
         return heroCreado;
     }
 
     async actualizarHeroe(id,datosActualizados)
     {
-        const superheroeActualizado = await superHero.findByIdAndUpdate(
-            { _id: id }, 
+        const superheroeActualizado = await SuperHero.findByIdAndUpdate(
+            id, 
             datosActualizados,
             {
                 new: true,        
@@ -76,7 +73,7 @@ class SuperHeroRepository extends IRepository
     }
 
     async eliminarHeroe(id) {
-        const superheroeEliminado = await superHero.findByIdAndDelete(id);
+        const superheroeEliminado = await SuperHero.findByIdAndDelete(id);
         return superheroeEliminado;
 }
 }

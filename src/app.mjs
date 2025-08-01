@@ -8,7 +8,7 @@ import methodOverride from 'method-override';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename); // Esto te da la ruta del directorio actual (src)
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -52,5 +52,5 @@ app.use((req,res) => {
 
 app.listen(PORT,()=>
 {
-    console.log(`Servidor escuchando en el puerto ${PORT} , en http://localhost:${PORT}`);
+    console.log(`Servidor escuchando en el puerto ${PORT} , en http://localhost:${PORT}/api/`);
 });
