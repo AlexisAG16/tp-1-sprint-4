@@ -1,0 +1,329 @@
+/* Estilos para el Sticky Footer (CSS Puro) */
+html, body {
+    height: 100%; /* Asegura que html y body ocupen toda la altura del viewport */
+    margin: 0;
+    padding: 0; /* Asegura que no haya padding global que interfiera */
+}
+
+body {
+    display: flex; /* Convierte el body en un contenedor flex */
+    flex-direction: column; /* Organiza los elementos hijos (header, main, footer) en una columna */
+    min-height: 100vh; /* Asegura que el body ocupe al menos el 100% de la altura del viewport */
+    
+    /* Tus estilos existentes para el body */
+    font-family: 'Inter', sans-serif;
+    background-image: url('https://i.pinimg.com/736x/44/03/a1/4403a179d7a84d6dad00e915c80b5a04.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+    /* REMOVIDO: padding-bottom:60px; - No es necesario con sticky footer */
+}
+
+main {
+    flex-grow: 1; /* Permite que el main se "estire" y ocupe todo el espacio disponible */
+    /* Puedes añadir padding aquí si quieres que el contenido no se pegue a los bordes del main */
+    /* padding: 20px; */
+}
+
+/* Estilos para el Footer (modificado para sticky footer) */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    margin-top: auto; /* Esto empuja el footer hacia abajo en un contenedor flex-col */
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+}
+
+/* Fuentes y estilos globales */
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* Contenedores generales */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilos para botones */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary { background-color: #3498db; }
+.btn-primary:hover { background-color: #2980b9; }
+.btn-success { background-color: #27ae60; }
+.btn-success:hover { background-color: #229954; }
+.btn-warning { background-color: #f39c12; }
+.btn-warning:hover { background-color: #e67e22; }
+.btn-danger { background-color: #e74c3c; }
+.btn-danger:hover { background-color: #c0392b; }
+.btn-secondary { background-color: #95a5a6; }
+.btn-secondary:hover { background-color: #7f8c8d; }
+
+/* Estilos para Formularios */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.form-container fieldset {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.form-container legend {
+    font-weight: bold;
+    color: #34495e;
+    padding: 0 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilos para Tarjetas de Superhéroes (Dashboard) */
+.heroes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 30px;
+    text-align: left; /* Asegura que el texto de la grid se alinee a la izquierda */
+}
+
+@media (min-width: 768px) {
+    .heroes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .heroes-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.hero-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid #3498db;
+}
+
+.hero-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.hero-card h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.hero-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.hero-card ul li {
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.hero-card ul li strong {
+    color: #333;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Estilos para Página de Confirmación */
+.confirmation-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    margin: 50px auto;
+    text-align: center;
+    border-top: 5px solid #e74c3c;
+}
+
+.confirmation-container h1 {
+    color: #e74c3c;
+    margin-bottom: 20px;
+}
+
+.confirmation-container p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.confirmation-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Mensajes de feedback (para futuras validaciones, etc.) */
+.message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    .container, .form-container, .confirmation-container {
+        margin: 15px auto;
+        padding: 20px;
+    }
+    .btn {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .form-group input {
+        width: 100%;
+    }
+    .hero-actions {
+        flex-direction: column;
+    }
+}
+
+/* Estilos del Navbar (existentes) */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+.navbar .logo {
+    width: 50px;
+    margin-right: 20px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.navbar ul li a img{
+    width: 20px;
+}

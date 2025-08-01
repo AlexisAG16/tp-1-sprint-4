@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Eliminación</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>¿Confirmar Eliminación?</h1>
+        <% if (info) { %>
+            <p>Deseas eliminar a <%= info.nombreSuperHeroe %> de la base de datos.</p>
+            <p>¿Seguro de que quieres continuar?</p>
+
+            <div class="confirmation-buttons">
+                <form action="http://localhost:3000/api/EliminarHero/<%= info._id %>?_method=DELETE" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger confirm-btn">Sí, Eliminar</button>
+                </form>
+
+                <a href="http://localhost:3000/api/heroes" class="btn btn-secondary cancel-btn">Cancelar</a>
+            </div>
+        <% } else { %>
+            <p class="message error">No se pudo encontrar el superhéroe para confirmar la eliminación.</p>
+            <a href="http://localhost:3000/api/heroes" class="btn btn-secondary">Volver a la lista</a>
+        <% } %>
+    </div>
+</body>
+</html>

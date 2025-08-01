@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Superhéroe: <%= info.nombreSuperHeroe %></title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Actualizar Superhéroe: <%= info.nombreSuperHeroe %></h1>
+        <form action="http://localhost:3000/api/ActualizarHero/<%=info._id%>?_method=PUT" method="post">
+            <fieldset>
+                <legend>Información Básica</legend>
+                <div class="form-group">
+                    <label for="nombreSuperHeroe">Nombre del superhéroe:</label>
+                    <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" value="<%= info.nombreSuperHeroe %>" required minlength="3" maxlength="60">
+                </div>
+                <div class="form-group">
+                    <label for="nombreReal">Nombre real del superhéroe:</label>
+                    <input type="text" id="nombreReal" name="nombreReal" value="<%= info.nombreReal %>" required minlength="3" maxlength="60">
+                </div>
+                <div class="form-group">
+                    <label for="edad">Edad:</label>
+                    <input type="number" id="edad" name="edad" value="<%= info.edad %>" required min="0" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="planetaOrigen">Planeta de origen:</label>
+                    <input type="text" id="planetaOrigen" name="planetaOrigen" value="<%= info.planetaOrigen || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="debilidad">Debilidad:</label>
+                    <input type="text" id="debilidad" name="debilidad" value="<%= info.debilidad || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="creador">Creador:</label>
+                    <input type="text" id="creador" name="creador" value="<%= info.creador || '' %>">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Habilidades y Relaciones</legend>
+                <div class="form-group">
+                    <label for="poderes">Poderes (separados por comas):</label>
+                    <input type="text" id="poderes" name="poderes" pattern="^(\s*\w.{2,58}\s*)(\s*,\s*\w.{2,58}\s*)*$" value="<%= info.poderes ? info.poderes.join(', ') : '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="aliados">Aliados (separados por comas):</label>
+                    <input type="text" id="aliados" name="aliados" value="<%= info.aliados ? info.aliados.join(', ') : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="enemigos">Enemigos (separados por comas):</label>
+                    <input type="text" id="enemigos" name="enemigos" value="<%= info.enemigos ? info.enemigos.join(', ') : '' %>">
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Actualizar Superhéroe</button>
+                <a href="http://localhost:3000/api/heroes" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/estilos.css">
+    <title>ACTUALIZAR SUPERHEROE</title>
+</head>
+<body>
+   <h1>Actualizar Superheroe</h1>
+    <form action="http://localhost:3000/api/ActualizarHero/<%=info._id%>?_method=PUT" method="post">
+        <fieldset>
+        <label>Ingresar el nombre del superheroe :</label>
+            <input type="text" name="nombreSuperHeroe" value="<%=info.nombreSuperHeroe%>" required minlength="3" maxlength="60"><br><br><br>
+        <label>Ingresar el nombre real del superheroe</label>
+            <input type="text" name="nombreReal" value="<%=info.nombreReal%>" required minlength="3" maxlength="60"><br><br><br>
+        <label>Ingresar la edad</label>
+            <input type="number" name="edad" value="<%=info.edad%>" required min="0" step="1"><br><br><br>
+        <label>Ingresar el planeta de origen</label>
+            <input type="text" name="planetaOrigen" value="<%=info.planetaOrigen%>"><br><br><br>
+        <label>Ingresar la debilidad</label>
+            <input type="text" name="debilidad" value="<%=info.debilidad%>"><br><br><br>
+        <label>Ingresar el creador</label>
+            <input type="text" name="creador" value="<%=info.creador%>"><br><br>
+        </fieldset>
+        <fieldset><br><br>
+            <label>Ingresar los poderes</label>
+                <input type="text" name="poderes" pattern="^(\s*\w.{2,58}\s*)(\s*,\s*\w.{2,58}\s*)*$" value="<%=info.poderes ? info.poderes.join(', ') : ''%>" required><br><br><br>
+        </fieldset>
+
+        <fieldset><br><br>
+            <label>Ingresar los aliados</label>
+                <input type="text" name="aliados" value="<%=info.aliados ? info.aliados.join(', ') : ''%>"><br><br><br>
+        </fieldset>
+
+        <fieldset><br><br>
+        <label>Ingresar los enemigos</label>
+            <input type="text" name="enemigos" value="<%=info.enemigos ? info.enemigos.join(', ') : ''%>"><br><br><br>
+        </fieldset><br><br>
+        <button type="submit">
+            Actualizar Superheroe
+        </button>
+    </form>
+</body>
+</html> -->
