@@ -1,11 +1,11 @@
-import SuperHero from '../models/superheroe.mjs';
-import IRepository from './iRepository.mjs';
+import superHero from '../models/superheroe.mjs';
+import IRepository from './IRepository.mjs';
 
 class SuperHeroRepository extends IRepository
 {
     async obtenerPorId(id)
     {
-        const encontrarPorId = await SuperHero.findById(id);
+        const encontrarPorId = await superHero.findById(id);
         console.log(encontrarPorId);
 
         return encontrarPorId;
@@ -14,14 +14,14 @@ class SuperHeroRepository extends IRepository
     // Parte del CRUD para obtener o leer todos
     async obtenerTodos()
     {
-        const superheroeEncontrado = await SuperHero.find({});
+        const superheroeEncontrado = await superHero.find({});
 
         return superheroeEncontrado;
     }
 
     async buscarPorAtributo(atributo, valor) 
     {
-    const schemaType = SuperHero.schema.paths[atributo].instance;
+    const schemaType = superHero.schema.paths[atributo].instance;
     let query;
 
     if (schemaType === 'Number') {
@@ -33,13 +33,13 @@ class SuperHeroRepository extends IRepository
     query = { [atributo]: { $regex: valor, $options: 'i' } };
     }
 
-    const atributoValor = await SuperHero.find(query);
+    const atributoValor = await superHero.find(query);
     return atributoValor;
 }
 
     async obtenerMayoresDe30() 
     {
-        const superheroeEncontrado = await SuperHero.find
+        const superheroeEncontrado = await superHero.find
         ({
         edad: { $gt: 30 },
         planetaOrigen: 'Tierra',
@@ -53,7 +53,7 @@ class SuperHeroRepository extends IRepository
 
     async crearHero(objetoSuperheroe)
     {
-        const nuevoHeroe = new SuperHero(objetoSuperheroe);
+        const nuevoHeroe = new superHero(objetoSuperheroe);
         const heroCreado = await nuevoHeroe.save();
         console.log(heroCreado);
         return heroCreado;
@@ -61,7 +61,7 @@ class SuperHeroRepository extends IRepository
 
     async actualizarHeroe(id,datosActualizados)
     {
-        const superheroeActualizado = await SuperHero.findByIdAndUpdate(
+        const superheroeActualizado = await superHero.findByIdAndUpdate(
             id, 
             datosActualizados,
             {
@@ -73,7 +73,7 @@ class SuperHeroRepository extends IRepository
     }
 
     async eliminarHeroe(id) {
-        const superheroeEliminado = await SuperHero.findByIdAndDelete(id);
+        const superheroeEliminado = await superHero.findByIdAndDelete(id);
         return superheroeEliminado;
 }
 }
