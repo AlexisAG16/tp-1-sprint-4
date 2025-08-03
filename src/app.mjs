@@ -7,6 +7,16 @@ import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import { fileURLToPath } from 'url';
 
+// Manejo de promesas no capturadas (Unhandled Promise Rejection)
+// Esto debe ir al inicio del archivo para atrapar cualquier error global.
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Promesa no capturada:', reason.message || reason);
+    // Nota: Por lo general, es seguro dejar que la aplicación se caiga para
+    // que el gestor de procesos (como Render) la reinicie,
+    // pero puedes elegir manejarlo de forma diferente.
+});
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -45,6 +55,22 @@ app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api',superHeroRoutes);
+
+// Manejador de errores global
+// Este middleware capturará cualquier error no manejado en las rutas
+// y enviará una respuesta de error controlada al cliente.
+app.use((err, req, res, next) => {
+    console.error('Error no controlado:', err.stack);
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Error interno del servidor.';
+
+    res.status(statusCode).json({
+        success: false,
+        status: statusCode,
+        message: message,
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
+});
 
 app.use((req,res) => {
     res.status(404).send({mensaje:"Ruta no encontrada"});
