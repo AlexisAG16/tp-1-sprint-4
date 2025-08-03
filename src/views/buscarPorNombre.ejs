@@ -1,0 +1,115 @@
+<!-- HTML del formulario -->
+<div class="theme-heroes-background">
+    <div class="form-container">
+        <h1>Buscar Héroe por Nombre</h1>
+        <div class="form-section">
+            <p>Ingresa el nombre del superhéroe para modificarlo o eliminarlo.</p>
+            <form id="heroSearchForm" class="search-form">
+                <label for="heroName">Nombre del Superhéroe:</label>
+                <input type="text" id="heroNameInput" name="nombreSuperHeroe" placeholder="Ej: Spiderman" required>
+                <button type="button" id="searchButton">Buscar</button>
+            </form>
+
+            <div id="result-display"></div>
+
+            <div class="button-group">
+                <button type="button" id="modificarBtn" class="btn-update" style="display: none;">Modificar</button>
+                <button type="button" id="eliminarBtn" class="btn-delete" style="display: none;">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script de JavaScript para manejar la búsqueda y los botones -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const heroNameInput = document.getElementById('heroNameInput');
+        const searchButton = document.getElementById('searchButton');
+        const modifyButton = document.getElementById('modificarBtn');
+        const deleteButton = document.getElementById('eliminarBtn');
+        const resultDisplay = document.getElementById('result-display');
+        let heroId = null;
+
+        /**
+         * Muestra el resultado de la búsqueda y los botones de acción.
+         * @param {Object} hero - El objeto del superhéroe encontrado.
+         */
+        function showHeroResult(hero) {
+            if (hero && hero._id && hero.nombreSuperHeroe) {
+                heroId = hero._id;
+                resultDisplay.innerHTML = `
+                    <br>
+                    <h3>Superhéroe encontrado:</h3>
+                    <p><strong>Nombre:</strong> ${hero.nombreSuperHeroe}</p>
+                    <p><strong>ID:</strong> ${hero._id}</p>
+                `;
+                modifyButton.style.display = 'inline-block';
+                deleteButton.style.display = 'inline-block';
+            } else {
+                resultDisplay.innerHTML = `<p style="color: red;">Datos de superhéroe incompletos o inválidos.</p>`;
+                console.error("Los datos del superhéroe son incompletos o inválidos:", hero);
+            }
+        }
+
+        /**
+         * Limpia los resultados de la búsqueda y oculta los botones.
+         */
+        function clearResults() {
+            heroId = null;
+            resultDisplay.innerHTML = '';
+            modifyButton.style.display = 'none';
+            deleteButton.style.display = 'none';
+        }
+
+        // Evento de clic en el botón de búsqueda
+        searchButton.addEventListener('click', async () => {
+            clearResults();
+            const heroName = heroNameInput.value.trim();
+
+            if (!heroName) {
+                resultDisplay.innerHTML = '<p style="color: red;">Por favor, ingresa un nombre.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/buscarHeroe?nombreSuperHeroe=${encodeURIComponent(heroName)}`);
+                const data = await response.json();
+
+                console.log('Datos recibidos del servidor:', data);
+
+                if (response.ok) {
+                    if (data && data.superheroe) {
+                        showHeroResult(data.superheroe);
+                    } else if (data && data.message) {
+                        resultDisplay.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                    } else {
+                        resultDisplay.innerHTML = `<p style="color: red;">No se encontraron datos de superhéroe o el formato es incorrecto.</p>`;
+                    }
+                } else {
+                    resultDisplay.innerHTML = `<p style="color: red;">Error: ${data.error || data.message || 'Error desconocido del servidor'}</p>`;
+                }
+            } catch (error) {
+                console.error('Error al buscar superhéroe:', error);
+                resultDisplay.innerHTML = '<p style="color: red;">Ocurrió un error al intentar buscar el superhéroe.</p>';
+            }
+        });
+
+        // Evento de clic en el botón de Modificar
+        modifyButton.addEventListener('click', () => {
+            if (heroId) {
+                window.location.href = `/api/formEditarHero/${heroId}`;
+            } else {
+                console.error("ID del héroe no disponible para modificar.");
+            }
+        });
+
+        // Evento de clic en el botón de Eliminar
+        deleteButton.addEventListener('click', () => {
+            if (heroId) {
+                window.location.href = `/api/confirmarEliminar/${heroId}`;
+            } else {
+                console.error("ID del héroe no disponible para eliminar.");
+            }
+        });
+    });
+</script>

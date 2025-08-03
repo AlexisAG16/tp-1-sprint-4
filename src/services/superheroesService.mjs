@@ -24,6 +24,11 @@ export async function obtenerSuperheroesMayoresDe30()
     return await superheroesRepository.obtenerMayoresDe30();
 }
 
+export async function obtenerSuperheroePorNombre(nombre) {
+    // El servicio llama a la nueva función del repositorio
+    return await superheroesRepository.obtenerPorNombre(nombre);
+}
+
 // servicios nuevos
 export async function crearSuperheroe(objetoSuperheroe)
 {

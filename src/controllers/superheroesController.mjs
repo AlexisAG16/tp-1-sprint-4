@@ -1,6 +1,7 @@
 import {
     crearSuperheroe,
     obtenerSuperheroePorId,
+    obtenerSuperheroePorNombre,
     obtenerTodosLosSuperheroes,
     buscarSuperheroesPorAtributo,
     obtenerSuperheroesMayoresDe30,
@@ -139,9 +140,47 @@ export async function obtenerSuperheroesMayoresDe30Controller(req, res) {
 // ----------------------------------------------------
 
 export async function formAgregarHeroController(req, res) {
-    // Este siempre es para el navegador, así que siempre renderiza HTML
-    res.render('agregarHero');
-    //res.render('agregarHero', { title: 'Agregar Nuevo Superhéroe', navbarLinks: commonNavbarLinks });
+    try {
+        // Este siempre es para el navegador, así que siempre renderiza HTML
+        res.render('agregarHero');
+        //res.render('agregarHero', { title: 'Agregar Nuevo Superhéroe', navbarLinks: commonNavbarLinks });
+    } catch (error) {
+        console.error('Error al renderizar el formulario para agregar superhéroe:', error);
+        res.status(500).send('Error interno al cargar el formulario.');
+    }
+}
+
+// Controlador para mostrar el formulario de búsqueda
+export function formBuscarPorNombreController(req, res) {
+    try {
+        console.log('Mostrando formulario para buscar héroe por nombre.');
+        res.render('buscarPorNombre', { layout: 'layout', mensaje: null });
+    } catch (error) {
+        console.error('Error al mostrar el formulario de búsqueda:', error);
+        res.status(500).send({ mensaje: 'Error interno al cargar la página.' });
+    }
+}
+
+// Controlador para procesar la búsqueda por nombre (ahora en una función separada)
+export async function buscarPorNombreController(req, res) {
+    try {
+        const heroName = req.query.nombreSuperHeroe;
+        if (!heroName) {
+            return res.status(400).json({ error: 'El nombre del superhéroe es obligatorio.' });
+        }
+
+        const superheroe = await obtenerSuperheroePorNombre(heroName);
+
+        if (superheroe) {
+            return res.status(200).json({ superheroe: superheroe });
+        } else {
+            return res.status(404).json({ superheroe: null, message: 'Superhéroe no encontrado.' });
+        }
+
+    } catch (error) {
+        console.error('Error al buscar superhéroe:', error);
+        return res.status(500).json({ error: 'Error interno del servidor.' });
+    }
 }
 
 export async function formActualizarHeroeController(req, res) {

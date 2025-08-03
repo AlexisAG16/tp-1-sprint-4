@@ -7,10 +7,12 @@ import {
     buscarSuperheroesPorAtributoController,
     obtenerSuperheroesMayoresDe30Controller,
 
+    formBuscarPorNombreController,
     formAgregarHeroController,
     formActualizarHeroeController,
     confirmarEliminacionController,
 
+    buscarPorNombreController,
     agregarHeroController,
     actualizarHeroController,
     eliminarHeroController
@@ -57,9 +59,12 @@ router.get('/heroes/:id',obtenerSuperheroePorIdController);
 router.get('/heroes/buscar/:atributo/:valor',buscarSuperheroesPorAtributoController);
 
 // Formularios
+router.get('/formBuscarPorNombre', formBuscarPorNombreController);
 router.get('/formAgregarHero',formAgregarHeroController);
 router.get('/formEditarHero/:id',formActualizarHeroeController);
 router.get('/confirmarEliminar/:id', confirmarEliminacionController);
+
+router.get('/buscarHeroe', buscarPorNombreController);
 
 // Ruta: Create
 router.post('/AgregarHero',

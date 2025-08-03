@@ -19,10 +19,10 @@
                             <li><strong>Enemigos:</strong> <%= superheroe.enemigos && superheroe.enemigos.length > 0 ? superheroe.enemigos.join(', ') : 'N/A' %></li>
                             <li><strong>Creador:</strong> <%= superheroe.creador || 'N/A' %></li>
                         </ul>
-                        <div class="hero-actions">
+                        <!-- <div class="hero-actions">
                             <a href="http://localhost:3000/api/formEditarHero/<%= superheroe._id %>" class="btn btn-primary">Actualizar</a>
                             <a href="http://localhost:3000/api/confirmarEliminar/<%= superheroe._id %>" class="btn btn-danger">Eliminar</a>
-                        </div>
+                        </div> -->
                     </div>
                 <% }); %>
             </div>
