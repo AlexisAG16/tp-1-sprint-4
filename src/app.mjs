@@ -29,6 +29,14 @@ const loggerMiddleware = (req,res,next) =>
     next();
 };
 
+try {
+    connectDB();
+    console.log('Intentando conectar a la base de datos...');
+} catch (error) {
+    console.error('Error FATAL al conectar a la base de datos:', error);
+}
+//connectDB();
+
 app.use(loggerMiddleware);
 
 // para peticiones post en formularios
@@ -39,8 +47,6 @@ app.use(methodOverride('_method'));
 
 // parsea los datos JSON que se envian en http
 app.use(express.json());
-
-connectDB();
 
 // vistas ejs
 app.set('view engine','ejs');
@@ -53,6 +59,12 @@ app.use(expressLayouts);
 
 // para traer estilos al server
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.render('index', {
+        title: 'Superhéroes',
+    });
+});
 
 app.use('/api',superHeroRoutes);
 

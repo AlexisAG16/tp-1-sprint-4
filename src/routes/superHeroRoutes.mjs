@@ -50,7 +50,11 @@ router.get('/contact', (req, res) => {
     });
 }); */
 
-router.get('/', (req, res) => res.render('index'));
+// Raíz de la API, para confirmar que está funcionando
+router.get('/', (req, res) => {
+    res.json({ mensaje: 'Bienvenido a la API de Superhéroes' });
+});
+//router.get('/', (req, res) => res.render('index'));
 
 // endpoints de lectura
 router.get('/heroes',obtenerTodosLosSuperheroesController);
