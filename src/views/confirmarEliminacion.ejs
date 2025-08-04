@@ -6,15 +6,15 @@
             <p>¿Seguro de que quieres continuar?</p>
 
             <div class="confirmation-buttons">
-                <form action="http://localhost:3000/api/EliminarHero/<%= info._id %>?_method=DELETE" method="post" style="display: inline;">
+                <form action="/api/EliminarHero/<%= info._id %>?_method=DELETE" method="post" style="display: inline;">
                     <button type="submit" class="btn btn-danger confirm-btn">Sí, Eliminar</button>
                 </form>
 
-                <a href="http://localhost:3000/api/heroes" class="btn btn-secondary cancel-btn">Cancelar</a>
+                <a href="/api/formBuscarPorNombre" class="btn btn-secondary cancel-btn">Cancelar</a>
             </div>
         <% } else { %>
             <p class="message error">No se pudo encontrar el superhéroe para confirmar la eliminación.</p>
-            <a href="http://localhost:3000/api/heroes" class="btn btn-secondary">Volver a la lista</a>
+            <a href="/api/formBuscarPorNombre" class="btn btn-secondary">Volver a buscar</a>
         <% } %>
     </div>
 </div>

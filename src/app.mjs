@@ -9,13 +9,10 @@ import { fileURLToPath } from 'url';
 
 // Manejo de promesas no capturadas (Unhandled Promise Rejection)
 // Esto debe ir al inicio del archivo para atrapar cualquier error global.
+
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Promesa no capturada:', reason.message || reason);
-    // Nota: Por lo general, es seguro dejar que la aplicación se caiga para
-    // que el gestor de procesos (como Render) la reinicie,
-    // pero puedes elegir manejarlo de forma diferente.
 });
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,12 +56,6 @@ app.use(expressLayouts);
 
 // para traer estilos al server
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Superhéroes',
-    });
-});
 
 app.use('/api',superHeroRoutes);
 

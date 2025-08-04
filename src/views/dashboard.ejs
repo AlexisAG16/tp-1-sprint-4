@@ -2,7 +2,7 @@
     <div class="container">
         <h1>Lista de Superhéroes</h1>
         <!-- <div class="header-actions">
-            <a href="http://localhost:3000/api/formAgregarHero" class="btn btn-success">Crear Nuevo Superhéroe</a>
+            <a href="/api/formAgregarHero" class="btn btn-success">Crear Nuevo Superhéroe</a>
         </div>  -->     
         <% if (superheroes && superheroes.length > 0) { %>
             <div class="heroes-grid">
@@ -20,8 +20,8 @@
                             <li><strong>Creador:</strong> <%= superheroe.creador || 'N/A' %></li>
                         </ul>
                         <!-- <div class="hero-actions">
-                            <a href="http://localhost:3000/api/formEditarHero/<%= superheroe._id %>" class="btn btn-primary">Actualizar</a>
-                            <a href="http://localhost:3000/api/confirmarEliminar/<%= superheroe._id %>" class="btn btn-danger">Eliminar</a>
+                            <a href="/api/formEditarHero/<%= superheroe._id %>" class="btn btn-primary">Actualizar</a>
+                            <a href="/api/confirmarEliminar/<%= superheroe._id %>" class="btn btn-danger">Eliminar</a>
                         </div> -->
                     </div>
                 <% }); %>

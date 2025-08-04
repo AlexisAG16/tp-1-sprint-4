@@ -1,7 +1,7 @@
 <div class="theme-heroes-background"> 
     <div class="form-container">
         <h1>Actualizar Superhéroe: <%= info.nombreSuperHeroe %></h1>
-        <form action="http://localhost:3000/api/ActualizarHero/<%=info._id%>?_method=PUT" method="post">
+        <form action="/api/ActualizarHero/<%=info._id%>?_method=PUT" method="post">
             <fieldset>
                 <legend>Información Básica</legend>
                 <div class="form-group">
@@ -48,7 +48,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Actualizar Superhéroe</button>
-                <a href="http://localhost:3000/api/heroes" class="btn btn-secondary">Cancelar</a>
+                <a href="/api/formBuscarPorNombre" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
