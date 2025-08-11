@@ -49,13 +49,17 @@ class SuperHeroRepository extends IRepository
         return superheroeEncontrado;
     }
 
-    async obtenerPorNombre(nombre)
-    {
-        // Usamos una expresión regular para una búsqueda flexible e insensible a mayúsculas
-        const query = { nombreSuperHeroe: { $regex: new RegExp(nombre, 'i') } };
-        const superheroe = await superHero.findOne(query); // findOne en lugar de find para obtener un solo documento
-        return superheroe;
-    }
+async obtenerPorNombre(nombre) {
+    // Usamos una expresión regular para una búsqueda flexible e insensible a mayúsculas
+    // La opción 'i' es para case-insensitive
+    const query = { nombreSuperHeroe: { $regex: new RegExp(nombre, 'i') } };
+
+    // .find() devuelve un array con todos los documentos que coinciden, no solo el primero.
+    const superheroes = await superHero.find(query);
+
+    return superheroes; // Esto ahora devolverá un array de superhéroes, o un array vacío si no hay coincidencias.
+}
+
 
     // CRUD
 

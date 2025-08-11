@@ -161,7 +161,7 @@ export function formBuscarPorNombreController(req, res) {
     }
 }
 
-// Controlador para procesar la búsqueda por nombre (ahora en una función separada)
+// Controlador para procesar la búsqueda por nombre
 export async function buscarPorNombreController(req, res) {
     try {
         const heroName = req.query.nombreSuperHeroe;
@@ -169,12 +169,14 @@ export async function buscarPorNombreController(req, res) {
             return res.status(400).json({ error: 'El nombre del superhéroe es obligatorio.' });
         }
 
-        const superheroe = await obtenerSuperheroePorNombre(heroName);
+        // CAMBIO 1: Se usa 'superheroes' para reflejar que es un array.
+        const superheroes = await obtenerSuperheroePorNombre(heroName);
 
-        if (superheroe) {
-            return res.status(200).json({ superheroe: superheroe });
+        // CAMBIO 2: Se verifica si el array tiene elementos.
+        if (superheroes && superheroes.length > 0) {
+            return res.status(200).json({ superheroes: superheroes });
         } else {
-            return res.status(404).json({ superheroe: null, message: 'Superhéroe no encontrado.' });
+            return res.status(404).json({ superheroes: [], message: 'Superhéroe no encontrado.' });
         }
 
     } catch (error) {

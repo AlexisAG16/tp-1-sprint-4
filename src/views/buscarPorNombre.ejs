@@ -3,19 +3,14 @@
     <div class="form-container">
         <h1>Buscar Héroe por Nombre</h1>
         <div class="form-section">
-            <p>Ingresa el nombre del superhéroe para modificarlo o eliminarlo.</p>
+            <p>Ingresa el nombre o parte del nombre del superhéroe para modificarlo o eliminarlo.</p>
             <form id="heroSearchForm" class="search-form">
                 <label for="heroName">Nombre del Superhéroe:</label>
-                <input type="text" id="heroNameInput" name="nombreSuperHeroe" placeholder="Ej: Spiderman" required>
+                <input type="text" id="heroNameInput" name="nombreSuperHeroe" placeholder="Ej: spider" required>
                 <button type="button" id="searchButton">Buscar</button>
             </form>
-
+            <!-- El contenedor de resultados se mantiene, pero ahora se llenará dinámicamente -->
             <div id="result-display"></div>
-
-            <div class="button-group">
-                <button type="button" id="modificarBtn" class="btn-update" style="display: none;">Modificar</button>
-                <button type="button" id="eliminarBtn" class="btn-delete" style="display: none;">Eliminar</button>
-            </div>
         </div>
     </div>
 </div>
@@ -25,90 +20,90 @@
     document.addEventListener('DOMContentLoaded', () => {
         const heroNameInput = document.getElementById('heroNameInput');
         const searchButton = document.getElementById('searchButton');
-        const modifyButton = document.getElementById('modificarBtn');
-        const deleteButton = document.getElementById('eliminarBtn');
         const resultDisplay = document.getElementById('result-display');
-        let heroId = null;
 
         /**
-         * Muestra el resultado de la búsqueda y los botones de acción.
-         * @param {Object} hero - El objeto del superhéroe encontrado.
+         * Maneja el clic en los botones de "Modificar" o "Eliminar".
+         * Se usa una función de delegación de eventos para manejar los botones
+         * que se crean dinámicamente.
          */
-        function showHeroResult(hero) {
-            if (hero && hero._id && hero.nombreSuperHeroe) {
-                heroId = hero._id;
-                resultDisplay.innerHTML = `
-                    <br>
-                    <h3>Superhéroe encontrado:</h3>
-                    <p><strong>Nombre:</strong> ${hero.nombreSuperHeroe}</p>
-                    <p><strong>ID:</strong> ${hero._id}</p>
-                `;
-                modifyButton.style.display = 'inline-block';
-                deleteButton.style.display = 'inline-block';
-            } else {
-                resultDisplay.innerHTML = `<p style="color: red;">Datos de superhéroe incompletos o inválidos.</p>`;
-                console.error("Los datos del superhéroe son incompletos o inválidos:", hero);
+        resultDisplay.addEventListener('click', (event) => {
+            const button = event.target.closest('button');
+            if (!button) return;
+
+            const heroId = button.dataset.id;
+            if (!heroId) {
+                console.error("ID del héroe no disponible.");
+                return;
             }
-        }
+
+            if (button.classList.contains('btn-update')) {
+                window.location.href = `/api/formEditarHero/${heroId}`;
+            } else if (button.classList.contains('btn-delete')) {
+                window.location.href = `/api/confirmarEliminar/${heroId}`;
+            }
+        });
 
         /**
-         * Limpia los resultados de la búsqueda y oculta los botones.
+         * Muestra los resultados de la búsqueda.
+         * Ahora acepta un array de héroes y genera un bloque HTML para cada uno.
+         * @param {Array} heroes - Un array de objetos de superhéroes.
          */
-        function clearResults() {
-            heroId = null;
-            resultDisplay.innerHTML = '';
-            modifyButton.style.display = 'none';
-            deleteButton.style.display = 'none';
+        function showHeroResults(heroes) {
+            resultDisplay.innerHTML = ''; // Limpia resultados anteriores
+
+            if (heroes.length === 0) {
+                resultDisplay.innerHTML = `<p style="color: red;">No se encontraron superhéroes con ese nombre.</p>`;
+                return;
+            }
+
+            // Mapea el array de héroes a un array de strings HTML y los une
+            const resultsHtml = heroes.map(hero => `
+                <div class="hero-result-item">
+                    <h3>Nombre: ${hero.nombreSuperHeroe}</h3>
+                    <p><strong>ID:</strong> ${hero._id}</p>
+                    <div class="button-group">
+                        <!-- Los botones ahora tienen un data-id para identificar al héroe -->
+                        <button type="button" class="btn-update" data-id="${hero._id}">Modificar</button>
+                        <button type="button" class="btn-delete" data-id="${hero._id}">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+
+            resultDisplay.innerHTML = `
+                <br>
+                <h3>Superhéroes encontrados:</h3>
+                ${resultsHtml}
+            `;
         }
 
         // Evento de clic en el botón de búsqueda
         searchButton.addEventListener('click', async () => {
-            clearResults();
             const heroName = heroNameInput.value.trim();
-
             if (!heroName) {
-                resultDisplay.innerHTML = '<p style="color: red;">Por favor, ingresa un nombre.</p>';
+                resultDisplay.innerHTML = '<p style="color: red;">Por favor, ingresa un nombre o parte del nombre.</p>';
                 return;
             }
 
             try {
+                // Se llama a la misma URL, pero el backend ahora devolverá un array
                 const response = await fetch(`/api/buscarHeroe?nombreSuperHeroe=${encodeURIComponent(heroName)}`);
                 const data = await response.json();
 
-                console.log('Datos recibidos del servidor:', data);
-
                 if (response.ok) {
-                    if (data && data.superheroe) {
-                        showHeroResult(data.superheroe);
-                    } else if (data && data.message) {
-                        resultDisplay.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                    if (data && data.superheroes) { // El servidor ahora devuelve 'superheroes' (plural)
+                        showHeroResults(data.superheroes);
                     } else {
-                        resultDisplay.innerHTML = `<p style="color: red;">No se encontraron datos de superhéroe o el formato es incorrecto.</p>`;
+                        // En caso de que el servidor no devuelva el formato esperado
+                        resultDisplay.innerHTML = `<p style="color: red;">No se encontraron datos o el formato es incorrecto.</p>`;
+                        console.error("Respuesta inesperada del servidor:", data);
                     }
                 } else {
-                    resultDisplay.innerHTML = `<p style="color: red;">Error: ${data.error || data.message || 'Error desconocido del servidor'}</p>`;
+                    resultDisplay.innerHTML = `<p style="color: red;">Error: ${data.message || 'Error desconocido del servidor'}</p>`;
                 }
             } catch (error) {
                 console.error('Error al buscar superhéroe:', error);
                 resultDisplay.innerHTML = '<p style="color: red;">Ocurrió un error al intentar buscar el superhéroe.</p>';
-            }
-        });
-
-        // Evento de clic en el botón de Modificar
-        modifyButton.addEventListener('click', () => {
-            if (heroId) {
-                window.location.href = `/api/formEditarHero/${heroId}`;
-            } else {
-                console.error("ID del héroe no disponible para modificar.");
-            }
-        });
-
-        // Evento de clic en el botón de Eliminar
-        deleteButton.addEventListener('click', () => {
-            if (heroId) {
-                window.location.href = `/api/confirmarEliminar/${heroId}`;
-            } else {
-                console.error("ID del héroe no disponible para eliminar.");
             }
         });
     });
